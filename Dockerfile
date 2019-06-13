@@ -15,8 +15,14 @@ RUN  apt-get update \
      && apt-get install -y google-chrome-unstable --no-install-recommends \
      && rm -rf /var/lib/apt/lists/* \
      && wget --quiet https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/sbin/wait-for-it.sh \
-     && chmod +x /usr/sbin/wait-for-it.sh
+     && chmod +x /usr/sbin/wait-for-it.sh \
+     && wget https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64.deb \
+     && dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb \
+     && apt-get install -y nano
+     && apt-get install -y git
+     && apt-get install -y supervisor 
 
 # Install Puppeteer under /node_modules so it's available system-wide
 ADD package.json package-lock.json /
+ENTRYPOINT ["dumb-init", "--"]
 RUN npm install
