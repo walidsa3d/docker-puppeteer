@@ -3,7 +3,7 @@
 # Based upon:
 # https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:10.16.0-slim@sha256:9afe43a8f8944377272e5f000695cc350db8e723639a4a44cf6e5c96c8a0ac9f
+FROM node:12.4.0-stretch-slim
     
 RUN  apt-get update \
      # Install latest chrome dev package, which installs the necessary libs to
@@ -17,11 +17,10 @@ RUN  apt-get update \
      && chmod +x /usr/sbin/wait-for-it.sh \
      && wget https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64.deb \
      && dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb \
-     && apt-get install -y make g++ \
-     && apt-get install -y nano \
-     && apt-get install -y git  \
+     && apt-get install -y g++ make \
+     && apt-get install -y git \
      && apt-get install -y supervisor \
-     && rm -rf /var/lib/apt/lists/* \
+     && rm -rf /var/lib/apt/lists/*
  
 
 # Install Puppeteer under /node_modules so it's available system-wide
