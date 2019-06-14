@@ -13,14 +13,16 @@ RUN  apt-get update \
      && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
      && apt-get update \
      && apt-get install -y google-chrome-unstable --no-install-recommends \
-     && rm -rf /var/lib/apt/lists/* \
      && wget --quiet https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/sbin/wait-for-it.sh \
      && chmod +x /usr/sbin/wait-for-it.sh \
      && wget https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_amd64.deb \
      && dpkg -i dumb-init_*.deb && rm -f dumb-init_*.deb \
-     && apt-get install -y nano
-     && apt-get install -y git
-     && apt-get install -y supervisor 
+     && apt-get install -y make g++ \
+     && apt-get install -y nano \
+     && apt-get install -y git  \
+     && apt-get install -y supervisor \
+     && rm -rf /var/lib/apt/lists/* \
+ 
 
 # Install Puppeteer under /node_modules so it's available system-wide
 ADD package.json package-lock.json /
